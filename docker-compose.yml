@@ -6,20 +6,24 @@ services:
       context: ./api
       dockerfile: Dockerfile
     container_name: sauna-api
-    command: bash -c "bundle exec rails db:create db:migrate && bundle exec rails s -b 0.0.0.0 -p 3000"
+    command: bash -c "dockerize -wait tcp://db:3306 -timeout 60s && bundle exec rails db:prepare && bundle exec rails s -b 0.0.0.0 -p 3000"
     volumes:
       - ./api:/app
       - bundle_data:/usr/local/bundle
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - RAILS_ENV=development
       - DATABASE_HOST=db
       - DATABASE_USERNAME=root
-      - DATABASE_PASSWORD=password
-      - DATABASE_NAME=sauna_dev
+      - DATABASE_PASSWORD=${DB_ROOT_PASSWORD:-dev_sauna_root_123!}
+      - DATABASE_NAME=${DB_NAME:-sauna_dev}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE:-development_secret_key_base_change_in_production}
+    networks:
+      - sauna-network
 
   frontend:
     build:
@@ -33,25 +37,41 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://localhost:3000/api/v1
+      - VITE_API_URL=${FRONTEND_API_URL:-http://localhost:3000/api/v1}
+      - VITE_APP_NAME=${APP_NAME:-Sauna Station}
     depends_on:
       - api
+    networks:
+      - sauna-network
 
   db:
     image: mysql:8.0
     container_name: sauna-db
     restart: always
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: sauna_dev
-      MYSQL_USER: sauna_user
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-dev_sauna_root_123!}
+      MYSQL_DATABASE: ${DB_NAME:-sauna_dev}
+      MYSQL_USER: ${DB_USER:-sauna_user}
+      MYSQL_PASSWORD: ${DB_USER_PASSWORD:-dev_sauna_user_123!}
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-dev_sauna_root_123!}"]
+      timeout: 20s
+      retries: 10
+      interval: 30s
+      start_period: 30s
+    networks:
+      - sauna-network
 
 volumes:
   bundle_data:
   node_modules:
   db_data:
+
+networks:
+  sauna-network:
+    driver: bridge

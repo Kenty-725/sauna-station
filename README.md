@@ -89,13 +89,21 @@ git clone <repository-url>
 cd sauna-station
 ```
 
-2. **コンテナのビルド・起動**
+2. **環境変数の設定**
+
+```bash
+# 環境変数テンプレートをコピー
+cp .env.example .env
+# 開発環境では基本的にデフォルト値のままでOK
+```
+
+3. **コンテナのビルド・起動**
 
 ```bash
 docker-compose up --build
 ```
 
-3. **アクセス確認**
+4. **アクセス確認**
 
 - Frontend: http://localhost:5173
 - API: http://localhost:3000
