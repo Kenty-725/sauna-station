@@ -77,8 +77,14 @@ sauna-station/
 
 ### 前提条件
 
+#### Mac/Linux
 - Docker Desktop
 - Git
+
+#### Windows
+- Docker Desktop for Windows
+- Git for Windows
+- WSL2 (推奨)
 
 ### 初回セットアップ
 
@@ -92,8 +98,12 @@ cd sauna-station
 2. **環境変数の設定**
 
 ```bash
-# 環境変数テンプレートをコピー
+# Mac/Linux/Git Bash
 cp .env.example .env
+
+# Windows PowerShell
+copy .env.example .env
+
 # 開発環境では基本的にデフォルト値のままでOK
 ```
 
