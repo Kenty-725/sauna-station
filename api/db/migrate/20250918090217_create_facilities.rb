@@ -10,7 +10,7 @@ class CreateFacilities < ActiveRecord::Migration[7.2]
       t.text    :access_info
       t.integer :base_capacity, null: false, default: 0
       t.integer :base_price, null: false, default: 0
-      t.string  :status, null: false, default: "draft"
+      t.integer  :status, null: false, default: 0
 
       t.timestamps
     end

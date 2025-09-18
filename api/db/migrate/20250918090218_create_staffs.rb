@@ -5,8 +5,11 @@ class CreateStaffs < ActiveRecord::Migration[7.2]
       t.string :name, null: false
       t.string :email, null: false
       t.string :password_digest, null: false
+      t.integer :role, null: false, default: 1
+      t.string   :confirmation_token
+      t.datetime :confirmation_sent_at
       t.datetime :email_verified_at
-      t.string :role, null: false, default: 'staff'
+
 
       t.timestamps
     end

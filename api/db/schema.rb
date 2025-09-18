@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_090218) do
     t.text "access_info"
     t.integer "base_capacity", default: 0, null: false
     t.integer "base_price", default: 0, null: false
-    t.string "status", default: "draft", null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -31,8 +31,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_090218) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
+    t.integer "role", default: 1, null: false
+    t.string "confirmation_token"
+    t.datetime "confirmation_sent_at"
     t.datetime "email_verified_at"
-    t.string "role", default: "staff", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_staffs_on_email", unique: true

@@ -1,11 +1,11 @@
 class Facility < ApplicationRecord
   has_many :staffs, dependent: :destroy
 
-  enum status: {
-    draft: "draft",       # 登録中（下書き）
-    pending: "pending",   # 承認待ち
-    active: "active",     # 公開中
-    inactive: "inactive"  # 非公開
+  enum status: { 
+    draft: 0,   # 下書き
+    pending: 1, # 承認待ち
+    active: 2,  # 公開
+    inactive: 3 # 非公開
   }
 
   validates :name, presence: true
