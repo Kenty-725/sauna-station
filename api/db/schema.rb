@@ -10,5 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 0) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_18_090218) do
+  create_table "facilities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name", limit: 200, null: false
+    t.string "phone", limit: 15
+    t.string "address_prefecture", limit: 50, null: false
+    t.string "address_line", null: false
+    t.string "postal_code", limit: 7
+    t.text "description"
+    t.text "access_info"
+    t.integer "base_capacity", default: 0, null: false
+    t.integer "base_price", default: 0, null: false
+    t.string "status", default: "draft", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "staffs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "facility_id"
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.datetime "email_verified_at"
+    t.string "role", default: "staff", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_staffs_on_email", unique: true
+    t.index ["facility_id"], name: "index_staffs_on_facility_id"
+  end
+
+  add_foreign_key "staffs", "facilities"
 end
