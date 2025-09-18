@@ -1,8 +1,18 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import OnboardingPage from "./pages/OnboardingPage";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+
 function App() {
   return (
-    <div style={{ padding: '2rem', textAlign: 'center', width: '100%' }}>
-      <h1 style={{ fontSize: '3rem', fontWeight: 'bold', margin: 0 }}>Hello World</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/staff/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/onboarding" element={<OnboardingPage />} />
+      </Routes>
+    </Router>
   );
 }
 

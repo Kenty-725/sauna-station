@@ -1,0 +1,99 @@
+.container {
+  min-height: 100vh;
+  background-color: #111827;
+  color: white;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  max-width: 1100px;
+  width: 100%;
+  background-color: #374151;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 30%;
+  padding: 32px;
+  background-color: #1f2937;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebarTitle {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fed7aa;
+  margin-bottom: 24px;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.stepItem.active {
+  color: #fb923c;
+}
+
+.stepItem.inactive {
+  color: #9ca3af;
+}
+
+.stepNumber {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.stepNumber.active {
+  background-color: #ea580c;
+}
+
+.stepNumber.inactive {
+  background-color: #6b7280;
+}
+
+.stepLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.backButton {
+  width: 100%;
+  background-color: #4b5563;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 32px;
+}
+
+.contentArea {
+  flex: 1;
+  padding: 48px 64px;
+  background-color: #374151;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

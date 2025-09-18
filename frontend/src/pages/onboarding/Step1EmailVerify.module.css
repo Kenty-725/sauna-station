@@ -1,0 +1,7 @@
+.container { display: flex; flex-direction: column; gap: 16px; }
+.title { font-size: 20px; font-weight: 600; }
+.message { background: #fff3cd; color: #856404; padding: 12px; border-radius: 6px; border: 1px solid #ffeeba; }
+.actions { display: flex; gap: 12px; align-items: center; }
+.button { background: #2563eb; color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; }
+.secondary { background: #f3f4f6; color: #111827; }
+.note { color: #6b7280; font-size: 14px; }
