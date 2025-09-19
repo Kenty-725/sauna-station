@@ -7,8 +7,9 @@ module Api
         
         if staff.persisted?
           confirmation_url = staff.generate_confirmation_url(request.base_url)
+          # TODO: メール送信の実装が必要でありその時に調整する
           Rails.logger.info "[CONFIRMATION] URL: #{confirmation_url}"
-          render json: { message: "仮登録完了。ログに確認用URLを出力しました。" }, status: :created
+          render json: { message: "施設管理者アカウント仮登録完了。ログに確認用URLを出力しました。" }, status: :created
         else
           render_validation_errors(staff)
         end
