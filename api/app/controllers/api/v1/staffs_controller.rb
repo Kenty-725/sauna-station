@@ -2,18 +2,17 @@ module Api
   module V1
     class StaffsController < ApplicationController
       def create
-        staff = Staff.new(staff_params)
         # TODO: MVPでは問題ないが、スタッフ権限を持つスタッフを追加する際に調整する
-        staff.role = :admin # 管理者固定
-      
-        if staff.save
-          confirmation_url = "#{request.base_url}/api/v1/confirm?token=#{staff.confirmation_token}"
+        staff = Staff.create_admin_staff(staff_params)
+        
+        if staff.persisted?
+          confirmation_url = staff.generate_confirmation_url(request.base_url)
           Rails.logger.info "[CONFIRMATION] URL: #{confirmation_url}"
           render json: { message: "仮登録完了。ログに確認用URLを出力しました。" }, status: :created
         else
           render_validation_errors(staff)
         end
-      end      
+      end
 
       private
 
