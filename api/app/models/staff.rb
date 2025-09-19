@@ -3,7 +3,7 @@ class Staff < ApplicationRecord
 
   has_secure_password
 
-  enum role: { 
+  enum :role, { 
     admin: 0, # 管理者
     staff: 1  # スタッフ
   }
