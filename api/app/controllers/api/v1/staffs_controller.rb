@@ -11,7 +11,7 @@ module Api
           Rails.logger.info "[CONFIRMATION] URL: #{confirmation_url}"
           render json: { message: "仮登録完了。ログに確認用URLを出力しました。" }, status: :created
         else
-          render json: { errors: staff.errors.full_messages }, status: :unprocessable_entity
+          render_validation_errors(staff)
         end
       end      
 
