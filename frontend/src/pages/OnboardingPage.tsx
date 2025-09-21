@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Step0AccountForm from "./onboarding/Step0AccountForm";
+import Step1EmailVerify from "./onboarding/Step1EmailVerify";
 import styles from "./OnboardingPage.module.css";
 
 const STEPS = [
   "アカウント作成",
+  "メール確認",
   "施設基本情報",
   "所在地・営業情報",
   "予約ポリシー",
@@ -40,6 +42,12 @@ export default function OnboardingPage() {
             onNext={nextStep}
             onPrev={prevStep}
             step={step}
+          />
+        );
+      case 1:
+        return (
+          <Step1EmailVerify
+            email={formData.email}
           />
         );
       default:

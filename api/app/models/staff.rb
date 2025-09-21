@@ -16,7 +16,12 @@ class Staff < ApplicationRecord
     staff = new(staff_params)
     staff.role = :admin
     staff.generate_confirmation_token
-    staff.save
+    
+    if staff.save
+      # 確認メールを送信
+      AdminMailer.confirmation_email(staff).deliver_now
+    end
+    
     staff
   end
 
@@ -30,5 +35,10 @@ class Staff < ApplicationRecord
   # 確認用URLを生成
   def generate_confirmation_url(base_url)
     "#{base_url}/api/v1/confirm?token=#{confirmation_token}"
+  end
+
+  # メール確認を完了
+  def confirm!
+    update!(email_verified_at: Time.current, confirmation_token: nil)
   end
 end
