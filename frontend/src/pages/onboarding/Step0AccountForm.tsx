@@ -4,6 +4,7 @@ import {
   EnvelopeIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
+import styles from './Step0AccountForm.module.css';
 
 interface Step0AccountFormProps {
   formData: any;
@@ -21,205 +22,87 @@ export default function Step0AccountForm({
   step = 0,
 }: Step0AccountFormProps) {
   return (
-    <div style={{ maxWidth: '600px', marginRight: '32px' }}>
-      <h2 
-        style={{
-          fontSize: '30px',
-          fontWeight: 'bold',
-          color: '#FED7AA',
-          textAlign: 'center',
-          marginBottom: '32px'
-        }}
-      >
+    <div className={styles.formContainer}>
+      <h2 className={styles.title}>
         アカウント作成
       </h2>
-        {/* 担当者名 */}
-        <div style={{ marginBottom: '24px' }}>
-          <label 
-            style={{
-              display: 'block',
-              color: '#D1D5DB',
-              fontWeight: 'bold',
-              marginBottom: '8px'
-            }}
-          >
-            担当者名
-          </label>
-          <div style={{ position: 'relative' }}>
-            <UserIcon 
-              style={{
-                height: '20px',
-                width: '20px',
-                color: '#9CA3AF',
-                position: 'absolute',
-                left: '16px',
-                top: '50%',
-                transform: 'translateY(-50%)'
-              }} 
-            />
-            <input
-              type="text"
-              name="managerName"
-              value={formData.managerName || ""}
-              onChange={onChange}
-              style={{
-                width: '100%',
-                boxSizing: 'border-box',
-                paddingLeft: '48px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                border: '1px solid #4B5563',
-                backgroundColor: '#1F2937',
-                color: 'white',
-                borderRadius: '12px',
-                outline: 'none',
-                fontSize: '16px'
-              }}
-            />
-          </div>
+      {/* 担当者名 */}
+      <div className={styles.fieldGroup}>
+        <label className={styles.label}>
+          担当者名
+        </label>
+        <div className={styles.inputWrapper}>
+          <UserIcon className={styles.inputIcon} />
+          <input
+            type="text"
+            name="managerName"
+            value={formData.managerName || ""}
+            onChange={onChange}
+            className={styles.input}
+          />
         </div>
+      </div>
 
-        {/* メールアドレス */}
-        <div style={{ marginBottom: '24px' }}>
-          <label 
-            style={{
-              display: 'block',
-              color: '#D1D5DB',
-              fontWeight: 'bold',
-              marginBottom: '8px'
-            }}
-          >
-            メールアドレス
-          </label>
-          <div style={{ position: 'relative' }}>
-            <EnvelopeIcon 
-              style={{
-                height: '20px',
-                width: '20px',
-                color: '#9CA3AF',
-                position: 'absolute',
-                left: '16px',
-                top: '50%',
-                transform: 'translateY(-50%)'
-              }} 
-            />
-            <input
-              type="email"
-              name="email"
-              value={formData.email || ""}
-              onChange={onChange}
-              style={{
-                width: '100%',
-                boxSizing: 'border-box',
-                paddingLeft: '48px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                border: '1px solid #4B5563',
-                backgroundColor: '#1F2937',
-                color: 'white',
-                borderRadius: '12px',
-                outline: 'none',
-                fontSize: '16px'
-              }}
-            />
-          </div>
+      {/* メールアドレス */}
+      <div className={styles.fieldGroup}>
+        <label className={styles.label}>
+          メールアドレス
+        </label>
+        <div className={styles.inputWrapper}>
+          <EnvelopeIcon className={styles.inputIcon} />
+          <input
+            type="email"
+            name="email"
+            value={formData.email || ""}
+            onChange={onChange}
+            className={styles.input}
+          />
         </div>
+      </div>
 
-        {/* パスワード */}
-        <div style={{ marginBottom: '24px' }}>
-          <label 
-            style={{
-              display: 'block',
-              color: '#D1D5DB',
-              fontWeight: 'bold',
-              marginBottom: '8px'
-            }}
-          >
-            パスワード
-          </label>
-          <div style={{ position: 'relative' }}>
-            <LockClosedIcon 
-              style={{
-                height: '20px',
-                width: '20px',
-                color: '#9CA3AF',
-                position: 'absolute',
-                left: '16px',
-                top: '50%',
-                transform: 'translateY(-50%)'
-              }} 
-            />
-            <input
-              type="password"
-              name="password"
-              value={formData.password || ""}
-              onChange={onChange}
-              style={{
-                width: '100%',
-                boxSizing: 'border-box',
-                paddingLeft: '48px',
-                paddingRight: '16px',
-                paddingTop: '12px',
-                paddingBottom: '12px',
-                border: '1px solid #4B5563',
-                backgroundColor: '#1F2937',
-                color: 'white',
-                borderRadius: '12px',
-                outline: 'none',
-                fontSize: '16px'
-              }}
-            />
-          </div>
+      {/* パスワード */}
+      <div className={styles.fieldGroup}>
+        <label className={styles.label}>
+          パスワード
+        </label>
+        <div className={styles.inputWrapper}>
+          <LockClosedIcon className={styles.inputIcon} />
+          <input
+            type="password"
+            name="password"
+            value={formData.password || ""}
+            onChange={onChange}
+            className={styles.input}
+          />
         </div>
+      </div>
+
+      {/* パスワード確認 */}
+      <div className={styles.fieldGroup}>
+        <label className={styles.label}>
+          パスワード（確認用）
+        </label>
+        <div className={styles.inputWrapper}>
+          <LockClosedIcon className={styles.inputIcon} />
+          <input
+            type="password"
+            name="passwordConfirm"
+            value={formData.passwordConfirm || ""}
+            onChange={onChange}
+            className={styles.input}
+          />
+        </div>
+      </div>
 
       {/* ナビゲーションボタン */}
-      <div 
-        style={{
-          marginTop: '32px'
-        }}
-      >
+      <div className={styles.buttonContainer}>
         {step > 0 && onPrev && (
-          <button
-            onClick={onPrev}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              backgroundColor: '#4B5563',
-              color: 'white',
-              fontWeight: 'bold',
-              paddingTop: '12px',
-              paddingBottom: '12px',
-              paddingLeft: '16px',
-              paddingRight: '16px',
-              borderRadius: '12px',
-              border: 'none',
-              cursor: 'pointer'
-            }}
-          >
+          <button onClick={onPrev} className={styles.prevButton}>
             戻る
           </button>
         )}
-        <button
-          onClick={onNext}
-          style={{
-            width: '100%',
-            boxSizing: 'border-box',
-            backgroundColor: '#EA580C',
-            color: 'white',
-            fontWeight: 'bold',
-            paddingTop: '12px',
-            paddingBottom: '12px',
-            paddingLeft: '16px',
-            paddingRight: '16px',
-            borderRadius: '12px',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
-        >
-          次へ
+        <button onClick={onNext} className={styles.nextButton}>
+          作成する
         </button>
       </div>
     </div>
