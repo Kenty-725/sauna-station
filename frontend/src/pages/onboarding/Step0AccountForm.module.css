@@ -11,6 +11,18 @@
   margin-bottom: 32px;
 }
 
+.message {
+  background-color: #1f2937;
+  color: #fbbf24;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
+  border: 1px solid #f59e0b;
+}
+
 .fieldGroup {
   margin-bottom: 24px;
 }
@@ -69,6 +81,17 @@
   border: none;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.nextButton:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.nextButton:hover:not(:disabled) {
+  background-color: #dc2626;
 }
 
 .prevButton {

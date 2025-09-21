@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Step0AccountForm from "./onboarding/Step0AccountForm";
-import styles from './OnboardingPage.module.css';
+import styles from "./OnboardingPage.module.css";
 
 const STEPS = [
   "アカウント作成",
@@ -52,16 +52,18 @@ export default function OnboardingPage() {
         {/* Left Side: Step Indicator */}
         <div className={styles.sidebar}>
           <div>
-            <h3 className={styles.sidebarTitle}>
-              進行状況
-            </h3>
+            <h3 className={styles.sidebarTitle}>進行状況</h3>
             {STEPS.map((stepName, index) => (
               <div
                 key={index}
-                className={`${styles.stepItem} ${step >= index ? styles.active : styles.inactive}`}
+                className={`${styles.stepItem} ${
+                  step >= index ? styles.active : styles.inactive
+                }`}
               >
                 <div
-                  className={`${styles.stepNumber} ${step >= index ? styles.active : styles.inactive}`}
+                  className={`${styles.stepNumber} ${
+                    step >= index ? styles.active : styles.inactive
+                  }`}
                 >
                   {index + 1}
                 </div>
@@ -69,14 +71,14 @@ export default function OnboardingPage() {
               </div>
             ))}
           </div>
-          
+
           {/* トップページに戻るボタン */}
           <div>
             <button
               className={styles.backButton}
               onClick={() => {
                 // トップページに移動する処理をここに追加
-                console.log('トップページに戻る');
+                console.log("トップページに戻る");
               }}
             >
               トップページに戻る
@@ -85,9 +87,7 @@ export default function OnboardingPage() {
         </div>
 
         {/* Right Side: Step Content */}
-        <div className={styles.contentArea}>
-          {renderStep()}
-        </div>
+        <div className={styles.contentArea}>{renderStep()}</div>
       </div>
     </div>
   );

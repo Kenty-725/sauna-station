@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   UserIcon,
   EnvelopeIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
 import styles from './Step0AccountForm.module.css';
+import { createStaff } from "../../api/staffs";
 
 interface Step0AccountFormProps {
   formData: any;
@@ -21,16 +22,64 @@ export default function Step0AccountForm({
   onPrev,
   step = 0,
 }: Step0AccountFormProps) {
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleSubmit = async () => {
+    // バリデーションチェック
+    if (!formData.managerName || !formData.email || !formData.password || !formData.passwordConfirm) {
+      setMessage("全ての項目を入力してください。");
+      return;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      setMessage("メールアドレスの形式が正しくありません。");
+      return;
+    }
+
+    if (formData.password !== formData.passwordConfirm) {
+      setMessage("パスワードが一致しません。");
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage("");
+
+    try {
+      // 実際API呼び出し
+      await createStaff({
+        name: formData.managerName,
+        email: formData.email,
+        password: formData.password,
+        password_confirmation: formData.passwordConfirm,
+      });
+      
+      setMessage("アカウント作成に成功しました！ 確認メールをご確認ください。");
+      onNext();
+    } catch (err: any) {
+      if (err.errors) {
+        setMessage(err.errors.map((e: any) => e.message).join("\n"));
+      } else {
+        setMessage("サーバーエラーが発生しました");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.title}>
-        アカウント作成
-      </h2>
+      <h2 className={styles.title}>アカウント作成</h2>
+      
+      {message && (
+        <div className={styles.message}>
+          {message}
+        </div>
+      )}
       {/* 担当者名 */}
       <div className={styles.fieldGroup}>
-        <label className={styles.label}>
-          担当者名
-        </label>
+        <label className={styles.label}>担当者名</label>
         <div className={styles.inputWrapper}>
           <UserIcon className={styles.inputIcon} />
           <input
@@ -45,9 +94,7 @@ export default function Step0AccountForm({
 
       {/* メールアドレス */}
       <div className={styles.fieldGroup}>
-        <label className={styles.label}>
-          メールアドレス
-        </label>
+        <label className={styles.label}>メールアドレス</label>
         <div className={styles.inputWrapper}>
           <EnvelopeIcon className={styles.inputIcon} />
           <input
@@ -62,9 +109,7 @@ export default function Step0AccountForm({
 
       {/* パスワード */}
       <div className={styles.fieldGroup}>
-        <label className={styles.label}>
-          パスワード
-        </label>
+        <label className={styles.label}>パスワード</label>
         <div className={styles.inputWrapper}>
           <LockClosedIcon className={styles.inputIcon} />
           <input
@@ -79,9 +124,7 @@ export default function Step0AccountForm({
 
       {/* パスワード確認 */}
       <div className={styles.fieldGroup}>
-        <label className={styles.label}>
-          パスワード（確認用）
-        </label>
+        <label className={styles.label}>パスワード（確認用）</label>
         <div className={styles.inputWrapper}>
           <LockClosedIcon className={styles.inputIcon} />
           <input
@@ -101,8 +144,12 @@ export default function Step0AccountForm({
             戻る
           </button>
         )}
-        <button onClick={onNext} className={styles.nextButton}>
-          作成する
+        <button 
+          onClick={handleSubmit} 
+          className={styles.nextButton}
+          disabled={isLoading}
+        >
+          {isLoading ? '作成中...' : '作成する'}
         </button>
       </div>
     </div>
