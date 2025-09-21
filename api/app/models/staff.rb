@@ -9,7 +9,7 @@ class Staff < ApplicationRecord
   }
 
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   # 管理者権限でスタッフを作成
   def self.create_admin_staff(staff_params)
