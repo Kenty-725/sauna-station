@@ -1,6 +1,8 @@
 FROM ruby:3.3-slim
 
 # 必要パッケージをインストール
+ENV TZ=Asia/Tokyo
+
 RUN apt-get update -qq && apt-get install -y \
   build-essential \
   libpq-dev \
@@ -11,6 +13,7 @@ RUN apt-get update -qq && apt-get install -y \
   default-mysql-client \
   curl \
   pkg-config \
+  tzdata \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -33,6 +36,9 @@ COPY . .
 # 本番環境でのアセット事前コンパイル準備
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
+# Entrypoint (install to a path outside bind mount)
+RUN install -m 0755 ./docker/entrypoint.sh /usr/local/bin/sauna-entrypoint
+
 # 非rootユーザーでの実行
 RUN groupadd -r appuser && useradd -r -g appuser appuser \
   && chown -R appuser:appuser /app
@@ -40,4 +46,5 @@ USER appuser
 
 EXPOSE 3000
 
+ENTRYPOINT ["/usr/local/bin/sauna-entrypoint"]
 CMD ["bash", "-c", "bundle exec rails s -b 0.0.0.0 -p 3000"]
