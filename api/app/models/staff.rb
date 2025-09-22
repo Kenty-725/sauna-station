@@ -39,6 +39,10 @@ class Staff < ApplicationRecord
 
   # メール確認を完了
   def confirm!
-    update!(email_verified_at: Time.current, confirmation_token: nil)
+    now = Time.current
+    update!(
+      email_verified_at: now,
+      confirmation_token: nil
+    )
   end
 end

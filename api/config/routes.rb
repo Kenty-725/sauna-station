@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       # Email confirmation
       get 'confirm', to: 'confirmations#show'
       post 'confirm/resend', to: 'confirmations#resend'
+      get 'confirm/status', to: 'confirmations#status'
     end
   end
   

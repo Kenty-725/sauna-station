@@ -28,12 +28,17 @@ module Api
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # Use JST in application (Tokyo). DB stays UTC.
+    config.time_zone = "Tokyo"
+    config.active_record.default_timezone = :utc
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Frontend base URL for redirects (email confirmation etc.)
+    config.x.frontend_base_url = ENV.fetch('FRONTEND_BASE_URL', 'http://localhost:5173')
   end
 end
