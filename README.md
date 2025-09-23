@@ -121,6 +121,7 @@ docker-compose up --build
 
 - Frontend: http://localhost:5173
 - API: http://localhost:3000
+- API(開発用メール配信確認): http://localhost:3000/letter_opener/
 - Database: localhost:3306
 
 ### 日常的な開発
@@ -138,8 +139,8 @@ docker-compose exec api bash
 docker-compose exec frontend sh
 
 # ログの確認
-docker-compose logs api
-docker-compose logs frontend
+docker-compose logs -f api
+docker-compose logs -f frontend
 ```
 
 ### データベース操作
