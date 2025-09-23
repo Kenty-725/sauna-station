@@ -8,20 +8,12 @@ module Api
 
         staff = Staff.find_by(confirmation_token: token)
         unless staff
-          if request.format.html? || html_like?
-            @message = 'リンクが無効、または既に使用されています。'
-            @login_url = login_base_url
-            return render inline: success_or_error_html(@message, @login_url), content_type: 'text/html', status: :unprocessable_entity
-          end
+          return redirect_to(login_url_with_params(confirmed: 0, reason: 'invalid_token')) if request.format.html? || html_like?
           return render json: { error: 'トークンが無効です' }, status: :not_found
         end
 
         staff.confirm!
-        if request.format.html? || html_like?
-          @message = 'メール確認が完了しました。ログインして設定を続けてください。'
-          @login_url = login_base_url
-          return render inline: success_or_error_html(@message, @login_url), content_type: 'text/html', status: :ok
-        end
+        return redirect_to(login_url_with_params(confirmed: 1)) if request.format.html? || html_like?
         render json: { message: 'メール確認が完了しました' }, status: :ok
       end
 
@@ -66,38 +58,11 @@ module Api
         base = Rails.configuration.x.frontend_base_url
         q = ["confirmed=#{confirmed}"]
         q << "reason=#{reason}" if reason
-        "#{base}/login?#{q.join('&')}"
+        "#{base}/staff/login?#{q.join('&')}"
       end
 
       def login_base_url
         Rails.configuration.x.frontend_base_url + "/login"
-      end
-
-      def success_or_error_html(message, login_url)
-        <<~HTML
-        <!doctype html>
-        <html lang="ja">
-        <head>
-          <meta charset="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>Sauna Station メール確認</title>
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background:#f9fafb; color:#111827; }
-            .card { max-width:640px; margin:10vh auto; background:#fff; padding:28px; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,.08); }
-            h1 { font-size:20px; margin:0 0 12px; }
-            p { margin:0 0 16px; line-height:1.7; }
-            a.button { display:inline-block; background:#2563eb; color:#fff; padding:10px 16px; border-radius:8px; text-decoration:none; }
-          </style>
-        </head>
-        <body>
-          <div class="card">
-            <h1>Sauna Station</h1>
-            <p>#{ERB::Util.html_escape(message)}</p>
-            <p><a class="button" href="#{ERB::Util.html_escape(login_url)}">ログインへ</a></p>
-          </div>
-        </body>
-        </html>
-        HTML
       end
     end
   end

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Step0AccountForm from "./onboarding/Step0AccountForm";
 import Step1EmailVerify from "./onboarding/Step1EmailVerify";
 import styles from "./OnboardingPage.module.css";
@@ -13,7 +14,13 @@ const STEPS = [
 ];
 
 export default function OnboardingPage() {
-  const [step, setStep] = useState(0);
+  const [params] = useSearchParams();
+  const initialStep = useMemo(() => {
+    const raw = params.get("step");
+    const n = raw ? parseInt(raw, 10) : 0;
+    return Number.isFinite(n) ? Math.max(0, Math.min(n, STEPS.length - 1)) : 0;
+  }, [params]);
+  const [step, setStep] = useState(initialStep);
   const [formData, setFormData] = useState<any>({});
   const [message, setMessage] = useState("");
 

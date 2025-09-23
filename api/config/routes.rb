@@ -6,6 +6,14 @@ Rails.application.routes.draw do
       get 'confirm', to: 'confirmations#show'
       post 'confirm/resend', to: 'confirmations#resend'
       get 'confirm/status', to: 'confirmations#status'
+
+      # Auth
+      # Legacy endpoints
+      post 'login', to: 'sessions#create'
+      delete 'logout', to: 'sessions#destroy'
+      # Staff-specific endpoints
+      post 'staff/login', to: 'sessions#create'
+      delete 'staff/logout', to: 'sessions#destroy'
     end
   end
   
