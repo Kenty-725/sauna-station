@@ -46,15 +46,17 @@ sauna-station/
 │   │   │   └── api/
 │   │   │       └── v1/         # API v1エンドポイント
 │   │   ├── models/             # データモデル
-│   │   ├── serializers/        # JSON レスポンス用
-│   │   ├── jobs/               # 非同期処理
-│   │   └── mailers/           # メール送信
+│   │   ├── services/           # ドメインロジック（Confirm/Login など）
+│   │   ├── mailers/            # メール送信
+│   │   ├── views/              # メールテンプレート
+│   │   └── jobs/               # 非同期処理
 │   ├── config/                # Rails設定
 │   ├── db/                    # データベース関連
 │   └── spec/                  # テスト
 │       ├── factories/         # テストデータ
-│       ├── models/            # モデルテスト
-│       └── requests/          # APIテスト
+│       ├── services/          # サービスレイヤーテスト
+│       ├── mailers/           # メールテスト
+│       └── requests/          # APIテスト（今後）
 │
 ├── frontend/                  # React Frontend
 │   ├── public/                # 静的ファイル
@@ -114,7 +116,7 @@ copy .env.example .env
 3. **コンテナのビルド・起動**
 
 ```bash
-docker-compose up --build
+docker compose up -d --build
 ```
 
 4. **アクセス確認**
@@ -128,32 +130,32 @@ docker-compose up --build
 
 ```bash
 # 開発環境の起動
-docker-compose up
+docker compose up -d
 
 # 特定のサービスのみ起動
-docker-compose up api
-docker-compose up frontend
+docker compose up -d api
+docker compose up -d frontend
 
 # コンテナに入る
-docker-compose exec api bash
-docker-compose exec frontend sh
+docker compose exec api bash
+docker compose exec frontend sh
 
 # ログの確認
-docker-compose logs -f api
-docker-compose logs -f frontend
+docker compose logs -f api
+docker compose logs -f frontend
 ```
 
 ### データベース操作
 
 ```bash
 # マイグレーション実行
-docker-compose exec api bundle exec rails db:migrate
+docker compose exec api bundle exec rails db:migrate
 
 # シードデータの投入
-docker-compose exec api bundle exec rails db:seed
+docker compose exec api bundle exec rails db:seed
 
 # データベースリセット
-docker-compose exec api bundle exec rails db:drop db:create db:migrate db:seed
+docker compose exec api bundle exec rails db:drop db:create db:migrate db:seed
 ```
 
 ## 開発ルール
@@ -193,7 +195,9 @@ body (optional)
 - **ファイル配置**:
   - コントローラー: `app/controllers/api/v1/`
   - モデル: `app/models/`
-  - シリアライザー: `app/serializers/`
+  - サービス: `app/services/`
+  - メーラー: `app/mailers/`
+  - メールテンプレート: `app/views/`
   - テスト: `spec/`
 
 #### Frontend (React + TypeScript)
@@ -235,17 +239,17 @@ body (optional)
 
 ```bash
 # 全テスト実行
-docker-compose exec api bundle exec rspec
+docker compose exec api bundle exec rspec
 
 # 特定のテスト実行
-docker-compose exec api bundle exec rspec spec/models/user_spec.rb
+docker compose exec api bundle exec rspec spec/services/staffs/create_admin_spec.rb
 ```
 
 #### Frontend
 
 ```bash
 # テスト実行（今後追加予定）
-docker-compose exec frontend npm test
+docker compose exec frontend npm test
 ```
 
 ## デプロイ
@@ -274,24 +278,24 @@ VITE_API_URL=<本番API_URL>
 
 ```bash
 # コンテナとボリュームをクリア
-docker-compose down -v
+docker compose down -v
 docker system prune -a
-docker-compose up --build
+docker compose up -d --build
 ```
 
 **データベース接続エラー**
 
 ```bash
 # DBコンテナの再起動
-docker-compose restart db
+docker compose restart db
 ```
 
 **フロントエンドのビルドエラー**
 
 ```bash
 # node_modulesの再インストール
-docker-compose exec frontend rm -rf node_modules
-docker-compose exec frontend npm install
+docker compose exec frontend rm -rf node_modules
+docker compose exec frontend npm install
 ```
 
 ## サポート
@@ -305,4 +309,32 @@ docker-compose exec frontend npm install
 
 ---
 
-**Last Updated**: 2025-09-07
+## 🔐 認証・確認フロー（現在の実装）
+
+- 管理者仮登録: `POST /api/v1/staffs`
+  - メール送信: 確認URLを含む
+- メール確認: `GET /api/v1/confirm?token=...`
+  - 成功時: `http://localhost:5173/staff/login?confirmed=1` にリダイレクト
+  - 再送: `POST /api/v1/confirm/resend { email }`
+- スタッフログイン: `POST /api/v1/staff/login`
+  - 成功時: フロントは `/onboarding?step=2` へ遷移（施設基本情報から開始）
+
+開発時のメール確認
+- Letter Opener Web: `http://localhost:3000/letter_opener`
+
+## 🧰 運用Tips
+
+- コンテナ再起動時の Rails PID 問題
+  - `api/docker/entrypoint.sh` が `tmp/pids/server.pid` を削除してから起動
+- タイムゾーン
+  - アプリは JST（Tokyo）、DB保存は UTC。コンテナ環境変数 `TZ=Asia/Tokyo`
+
+## 🧪 テスト
+
+- RSpec 実行
+  - `docker compose exec api bundle exec rspec`
+  - test 環境では ActionMailer は `:test` を利用（deliveries に蓄積）
+
+---
+
+**Last Updated**: 2025-09-23
