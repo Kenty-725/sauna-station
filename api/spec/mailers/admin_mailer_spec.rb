@@ -23,14 +23,14 @@ RSpec.describe AdminMailer, type: :mailer do
       expect(mail.html_part.body.encoded).to match('テスト管理者')
       expect(mail.html_part.body.encoded).to match('admin@example.com')
       expect(mail.html_part.body.encoded).to match('Sauna Station')
-      expect(mail.html_part.body.encoded).to match('http://localhost:5173/login')
+      expect(mail.html_part.body.encoded).to match('http://localhost:5173/staff/login')
     end
 
     it 'テキストメール本文にスタッフ情報が含まれる' do
       expect(mail.text_part.body.encoded).to match('テスト管理者')
       expect(mail.text_part.body.encoded).to match('admin@example.com')
       expect(mail.text_part.body.encoded).to match('Sauna Station')
-      expect(mail.text_part.body.encoded).to match('http://localhost:5173/login')
+      expect(mail.text_part.body.encoded).to match('http://localhost:5173/staff/login')
     end
 
     it 'HTMLとテキストの両方の形式が含まれる' do

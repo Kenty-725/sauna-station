@@ -4,7 +4,8 @@ class AdminMailer < ApplicationMailer
   def welcome_email(staff)
     @staff = staff
     @app_name = 'Sauna Station'
-    @login_url = 'http://localhost:5173/login'
+    base = Rails.application.config.x.frontend_base_url
+    @login_url = File.join(base, 'staff/login')
     
     mail(
       to: @staff.email,
