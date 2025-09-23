@@ -11,22 +11,8 @@ class Staff < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  # 管理者権限でスタッフを作成
-  def self.create_admin_staff(staff_params)
-    staff = new(staff_params)
-    staff.role = :admin
-    staff.generate_confirmation_token
-    
-    if staff.save
-      # 確認メールを送信
-      AdminMailer.confirmation_email(staff).deliver_now
-    end
-    
-    staff
-  end
-
+  # NOTE: モデルはDBアクセス・小さな振る舞いに限定
   # 確認用トークンを生成
-  # TODO: メール送信の実装が必要でありその時に調整する
   def generate_confirmation_token
     self.confirmation_token = SecureRandom.urlsafe_base64(32)
     self.confirmation_sent_at = Time.current

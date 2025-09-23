@@ -2,7 +2,7 @@ class Facility < ApplicationRecord
   has_many :staffs, dependent: :destroy
 
   enum :status, { 
-    draft: 0,   # 下書き
+    draft: 0,   # 登録中
     pending: 1, # 承認待ち
     active: 2,  # 公開
     inactive: 3 # 非公開
