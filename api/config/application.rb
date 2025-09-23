@@ -32,6 +32,8 @@ module Api
     config.time_zone = "Tokyo"
     config.active_record.default_timezone = :utc
     # config.eager_load_paths << Rails.root.join("extras")
+    # Ensure services directory is autoloaded/eager loaded
+    config.paths.add 'app/services', eager_load: true
 
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.

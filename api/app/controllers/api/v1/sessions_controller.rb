@@ -6,24 +6,18 @@ module Api
         email = params[:email].to_s
         password = params[:password].to_s
 
-        if email.blank? || password.blank?
-          return render json: { error: 'メールアドレスとパスワードを入力してください' }, status: :unprocessable_entity
-        end
-
-        staff = Staff.find_by(email: email)
-        unless staff&.authenticate(password)
-          return render json: { error: 'メールアドレスまたはパスワードが正しくありません' }, status: :unauthorized
-        end
-
-        unless staff.email_verified_at.present?
-          return render json: { error: 'メール確認が未完了です。確認メールをご確認ください。' }, status: :forbidden
-        end
-
+        staff = ::Auth::StaffLogin.call(email: email, password: password)
         session[:staff_id] = staff.id
         render json: {
           message: 'ログインしました',
           staff: { id: staff.id, name: staff.name, email: staff.email, role: staff.role }
         }, status: :ok
+      rescue ArgumentError => e
+        render json: { error: e.message }, status: :unprocessable_entity
+      rescue Auth::StaffLogin::NotVerifiedError => e
+        render json: { error: e.message }, status: :forbidden
+      rescue StandardError => e
+        render json: { error: e.message }, status: :unauthorized
       end
 
       # DELETE /api/v1/logout
@@ -34,4 +28,3 @@ module Api
     end
   end
 end
-
