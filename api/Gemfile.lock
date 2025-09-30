@@ -318,6 +318,10 @@ DEPENDENCIES
   rubocop-rspec (~> 3.7)
   rails-i18n
   rspec-rails (~> 6.0)
+  rubocop (~> 1.81)
+  rubocop-performance (~> 1.26)
+  rubocop-rails (~> 2.33)
+  rubocop-rspec (~> 3.7)
   tzinfo-data
 
 RUBY VERSION
