@@ -124,6 +124,8 @@ GEM
       letter_opener (~> 1.9)
       railties (>= 6.1)
       rexml
+    json (2.15.0)
+    language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
     loofah (2.24.1)
@@ -310,6 +312,10 @@ DEPENDENCIES
   rubocop-rspec (~> 3.7)
   rails-i18n
   rspec-rails (~> 6.0)
+  rubocop (~> 1.81)
+  rubocop-performance (~> 1.26)
+  rubocop-rails (~> 2.33)
+  rubocop-rspec (~> 3.7)
   tzinfo-data
 
 RUBY VERSION
