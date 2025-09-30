@@ -1,0 +1,40 @@
+plugins:
+  - rubocop-rails
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  Exclude:
+    - "bin/**/*"
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "db/schema.rb"
+    - "db/migrate/**/*" # マイグレーションは歴史的経緯を尊重して除外が無難
+    - "tmp/**/*"
+    - "log/**/*"
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "test/**/*"
+    - "config/**/*"
+    - "lib/tasks/**/*"
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+RSpec:
+  Enabled: true
+  Exclude:
+    - "spec/fixtures/**/*"
