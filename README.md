@@ -297,7 +297,7 @@ docker-compose exec frontend npm install
 
 開発中に問題が発生した場合は、以下の手順で対応してください：
 
-1. この README のトラブルシューティングを確認
+1. この README のトラブルシューティングを確認d
 2. GitHub の Issue を検索
 3. 新しい Issue を作成
 4. チームメンバーに相談
