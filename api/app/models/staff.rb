@@ -1,4 +1,5 @@
 class Staff < ApplicationRecord
+  # NOTE: 基本的にスタッフは施設に所属するが管理アカウント作成時は施設がないためoptional: trueとしている
   belongs_to :facility, optional: true
 
   has_secure_password
@@ -30,5 +31,10 @@ class Staff < ApplicationRecord
       email_verified_at: now,
       confirmation_token: nil
     )
+  end
+
+  # 新規作成した管理者アカウントに登録した施設アカウントを紐付ける
+  def assign_facility(facility)
+    update(facility: facility)
   end
 end
