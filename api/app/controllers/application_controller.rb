@@ -25,6 +25,16 @@ class ApplicationController < ActionController::API
     render_validation_errors(exception.record)
   end
 
+  def current_staff
+    @current_staff ||= Staff.find_by(id: session[:staff_id])
+  end
+
+  def authenticate_staff!
+    return if current_staff
+
+    render json: { error: 'ログインが必要です' }, status: :unauthorized
+  end
+
   def render_not_found(exception)
     Rails.logger.error("[NOT FOUND] #{exception.message}\n#{exception.backtrace.join("\n")}")
     render json: { error: "リソースが見つかりません" }, status: :not_found
