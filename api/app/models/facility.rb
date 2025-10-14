@@ -13,4 +13,10 @@ class Facility < ApplicationRecord
   validates :address_line, presence: true
   validates :base_capacity, numericality: { greater_than_or_equal_to: 0 }
   validates :base_price, numericality: { greater_than_or_equal_to: 0 }
+
+  def self.create_account(params)
+    Facility.new(params).tap do |facility|
+      facility.status = :draft
+    end
+  end
 end
