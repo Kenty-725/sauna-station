@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       # Staff-specific endpoints
       post 'staff/login', to: 'sessions#create'
       delete 'staff/logout', to: 'sessions#destroy'
+
+      resources :facilities, only: [:create]
     end
   end
   
