@@ -1,4 +1,4 @@
-FROM ruby:3.3-slim
+FROM ruby:3.3.9-slim
 
 # 必要パッケージをインストール
 RUN apt-get update -qq && apt-get install -y \
