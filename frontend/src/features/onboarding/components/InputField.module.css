@@ -1,0 +1,39 @@
+.fieldGroup {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  color: #d1d5db;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputIcon {
+  height: 20px;
+  width: 20px;
+  color: #9ca3af;
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 48px;
+  padding-right: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border: 1px solid #4b5563;
+  background-color: #1f2937;
+  color: white;
+  border-radius: 12px;
+  outline: none;
+  font-size: 16px;
+}
