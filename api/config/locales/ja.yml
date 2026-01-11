@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        staff:
+          attributes:
+            email:
+              taken: "このメールアドレスは既に登録されています"
+            password:
+              blank: "パスワードを入力してください"
+            password_confirmation:
+              confirmation: "パスワードが一致しません"
+      messages:
+        blank: "入力してください"
+        taken: "既に使用されています"
+        too_short: "%{count}文字以上で入力してください"

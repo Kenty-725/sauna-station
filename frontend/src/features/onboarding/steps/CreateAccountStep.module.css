@@ -1,0 +1,76 @@
+.formContainer {
+  max-width: 600px;
+  margin-right: 32px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #fed7aa;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.message {
+  background-color: #1f2937;
+  color: #fbbf24;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-line;
+  border: 1px solid #f59e0b;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.nextButton {
+  flex: 1;
+  box-sizing: border-box;
+  background-color: #ea580c;
+  color: white;
+  font-weight: bold;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.nextButton:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.nextButton:hover:not(:disabled) {
+  background-color: #dc2626;
+}
+
+.prevButton {
+  background-color: #4b5563;
+  color: white;
+  font-weight: bold;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.prevButton:hover {
+  background-color: #6b7280;
+}
