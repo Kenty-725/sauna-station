@@ -6,12 +6,14 @@ interface StepNavigationProps {
   steps: Step[];
   getStepState: (stepId: StepId) => "active" | "completed" | "inactive";
   onBackToHome: () => void;
+  onLogout?: () => void;
 }
 
 export default function StepNavigation({
   steps,
   getStepState,
   onBackToHome,
+  onLogout,
 }: StepNavigationProps) {
   return (
     <>
@@ -31,6 +33,11 @@ export default function StepNavigation({
         <button className={styles.backButton} onClick={onBackToHome}>
           トップページに戻る
         </button>
+        {onLogout && (
+          <button className={styles.logoutButton} onClick={onLogout}>
+            ログアウト
+          </button>
+        )}
       </div>
     </>
   );

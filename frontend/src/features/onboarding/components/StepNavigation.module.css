@@ -71,3 +71,20 @@
 .backButton:hover {
   background-color: #6b7280;
 }
+
+.logoutButton {
+  width: 100%;
+  background-color: #b91c1c;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+.logoutButton:hover {
+  background-color: #dc2626;
+}

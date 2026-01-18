@@ -4,9 +4,8 @@ class FacilityOnboarding < ApplicationRecord
 
   enum :current_step, {
     account: 0,      ##アカウント作成
-    email_verify: 1, ##メール確認
-    facility_info: 2,##施設基本情報登録
-    complete: 3,     ##完了
+    facility_info: 1,##施設基本情報登録
+    complete: 2,     ##完了
   }
 
   def advance_to_next_step!
@@ -15,6 +14,17 @@ class FacilityOnboarding < ApplicationRecord
 
     update!(current_step: step)
     step
+  end
+
+  def ensure_at_least!(target_step)
+    target_key = target_step.to_sym
+    target_value = self.class.current_steps[target_key]
+    raise ArgumentError, "unknown step: #{target_step}" unless target_value
+
+    current_value = self.class.current_steps[current_step]
+    return if target_value <= current_value
+
+    update!(current_step: target_key)
   end
 
   class AlreadyOnboardedError < StandardError; end

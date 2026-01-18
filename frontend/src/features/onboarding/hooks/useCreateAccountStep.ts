@@ -4,7 +4,7 @@ import { createStaff } from "../api/createStaff";
 type UseCreateAccountStepArgs = {
   formData: Record<string, any>;
   onFormDataChange: (data: Record<string, any>) => void;
-  onSuccess: () => void;
+  onSuccess: (email: string) => Promise<void>;
 };
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,10 +65,12 @@ export function useCreateAccountStep({
       });
 
       setMessage("アカウント作成に成功しました！ 確認メールをご確認ください。");
-      onSuccess();
+      await onSuccess(formData.email);
     } catch (err: any) {
       if (err?.errors) {
         setMessage(err.errors.map((e: any) => e.message).join("\n"));
+      } else if (err?.error) {
+        setMessage(err.error);
       } else {
         setMessage("サーバーエラーが発生しました");
       }

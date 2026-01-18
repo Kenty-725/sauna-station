@@ -3,6 +3,7 @@ import OnboardingLayout from "./components/OnboardingLayout";
 import StepContentSwitcher from "./components/StepContentSwitcher";
 import StepNavigation from "./components/StepNavigation";
 import { useOnboardingFlow } from "./hooks/useOnboardingFlow";
+import { logout } from "../../api/auth";
 
 export default function OnboardingPage() {
   const navigate = useNavigate();
@@ -19,6 +20,22 @@ export default function OnboardingPage() {
     navigate("/");
   };
 
+  const handleNext = async (email?: string) => {
+    if (currentStep === "account" && email) {
+      navigate(`/email/verify?email=${encodeURIComponent(email)}`);
+      return;
+    }
+    await goNext();
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } finally {
+      navigate("/login");
+    }
+  };
+
   return (
     <OnboardingLayout
       sidebar={
@@ -26,6 +43,7 @@ export default function OnboardingPage() {
           steps={steps}
           getStepState={getStepState}
           onBackToHome={handleBackToHome}
+          onLogout={handleLogout}
         />
       }
     >
@@ -33,7 +51,7 @@ export default function OnboardingPage() {
         currentStep={currentStep}
         formData={formData}
         onFormDataChange={updateFormData}
-        onNext={goNext}
+        onNext={handleNext}
       />
     </OnboardingLayout>
   );
