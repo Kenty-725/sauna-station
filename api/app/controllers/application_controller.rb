@@ -34,4 +34,20 @@ class ApplicationController < ActionController::API
     Rails.logger.error("[INTERNAL ERROR] #{exception.message}\n#{exception.backtrace.join("\n")}")
     render json: { error: "予期せぬエラーが発生しました" }, status: :internal_server_error
   end
+
+  def authenticate_staff!
+    return if staff_signed_in?
+
+    render json: { error: "ログインしてください" }, status: :unauthorized
+  end
+
+  def staff_signed_in?
+    current_staff.present?
+  end
+
+  def current_staff
+    return @current_staff if defined?(@current_staff)
+
+    @current_staff = Staff.find_by(id: session[:staff_id])
+  end
 end
