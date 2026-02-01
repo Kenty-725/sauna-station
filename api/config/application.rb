@@ -41,18 +41,16 @@ module Api
     config.api_only = true
 
     # Explicitly configure session store (API-only defaults to disabled)
-    # SPA (localhost:5173など) からAPIを叩くので SameSite=None にしておく
+  
+    # NOTE: 基本的にフロントとAPIは同一ドメインで動作するため Lax で十分（Secure 要件を回避）
     config.session_store :cookie_store,
                          key: '_sauna_app_session',
-                         same_site: :none,
+                         same_site: :lax,
                          secure: Rails.env.production?
 
     # Enable cookies + session for API (for login)
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore,
-                          key: '_sauna_app_session',
-                          same_site: :none,
-                          secure: Rails.env.production?
+    config.middleware.use ActionDispatch::Session::CookieStore
 
     # Frontend base URL for redirects (email confirmation etc.)
     config.x.frontend_base_url = ENV.fetch('FRONTEND_BASE_URL', 'http://localhost:5173')
