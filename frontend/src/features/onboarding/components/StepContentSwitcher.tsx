@@ -6,7 +6,7 @@ interface StepContentSwitcherProps {
   currentStep: StepId;
   formData: Record<string, any>;
   onFormDataChange: (data: Record<string, any>) => void;
-  onNext: (email?: string) => Promise<void>;
+  onNext: () => Promise<void>;
 }
 
 export default function StepContentSwitcher({

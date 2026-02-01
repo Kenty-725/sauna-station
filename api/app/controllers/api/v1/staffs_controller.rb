@@ -8,6 +8,8 @@ module Api
         if staff.persisted?
           confirmation_url = staff.generate_confirmation_url(request.base_url)
           Rails.logger.info "[CONFIRMATION] URL: #{confirmation_url}"
+          # 未確認状態でメール再送を使えるよう、仮登録中のセッションIDを保持
+          session[:pending_staff_id] = staff.id
           render json: {
             message: "施設管理者アカウントの仮登録が完了しました。登録されたメールアドレスに確認メールを送信しました。",
             email: staff.email

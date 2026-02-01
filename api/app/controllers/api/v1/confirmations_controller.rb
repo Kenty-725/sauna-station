@@ -19,7 +19,13 @@ module Api
 
       # POST /api/v1/confirm/resend
       def resend
-        ::Staffs::ResendConfirmation.call(params[:email].to_s)
+        email = params[:email].to_s
+        if email.blank? && session[:pending_staff_id]
+          staff = Staff.find_by(id: session[:pending_staff_id])
+          email = staff&.email.to_s
+        end
+
+        ::Staffs::ResendConfirmation.call(email)
         render json: { message: '確認メールを再送しました' }, status: :ok
       rescue ArgumentError => e
         render json: { error: e.message }, status: :unprocessable_entity

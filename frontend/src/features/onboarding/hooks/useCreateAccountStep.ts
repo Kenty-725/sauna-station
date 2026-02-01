@@ -1,10 +1,12 @@
 import { useCallback, useState, type ChangeEvent } from "react";
 import { createStaff } from "../api/createStaff";
 
+const PENDING_EMAIL_KEY = "pending_onboarding_email";
+
 type UseCreateAccountStepArgs = {
   formData: Record<string, any>;
   onFormDataChange: (data: Record<string, any>) => void;
-  onSuccess: (email: string) => Promise<void>;
+  onSuccess: () => Promise<void>;
 };
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,8 +66,10 @@ export function useCreateAccountStep({
         password_confirmation: formData.passwordConfirm,
       });
 
+      // 確認メール再送用にブラウザ側で保持（URLには載せない）
+      sessionStorage.setItem(PENDING_EMAIL_KEY, formData.email);
       setMessage("アカウント作成に成功しました！ 確認メールをご確認ください。");
-      await onSuccess(formData.email);
+      await onSuccess();
     } catch (err: any) {
       if (err?.errors) {
         setMessage(err.errors.map((e: any) => e.message).join("\n"));

@@ -1,11 +1,11 @@
-export async function verifyEmail(email: string) {
+export async function verifyEmail(email?: string) {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/confirm/resend`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ email }),
+    body: JSON.stringify(email ? { email } : {}),
   });
 
   if (!res.ok) {

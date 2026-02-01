@@ -20,9 +20,9 @@ export default function OnboardingPage() {
     navigate("/");
   };
 
-  const handleNext = async (email?: string) => {
-    if (currentStep === "account" && email) {
-      navigate(`/email/verify?email=${encodeURIComponent(email)}`);
+  const handleNext = async () => {
+    if (currentStep === "account") {
+      navigate("/email/verify");
       return;
     }
     await goNext();
