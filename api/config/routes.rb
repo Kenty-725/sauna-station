@@ -7,6 +7,9 @@ Rails.application.routes.draw do
       post 'confirm/resend', to: 'confirmations#resend'
       get 'confirm/status', to: 'confirmations#status'
 
+      # Onboarding
+      resource :facility_onboarding, only: [:show, :update]
+
       # Auth
       # Legacy endpoints
       post 'login', to: 'sessions#create'

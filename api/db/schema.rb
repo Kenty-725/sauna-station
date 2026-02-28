@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_18_090218) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_12_074329) do
   create_table "facilities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", limit: 200, null: false
     t.string "phone", limit: 15
@@ -24,6 +24,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_090218) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "facility_onboardings", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "staff_id", null: false
+    t.bigint "facility_id"
+    t.integer "current_step", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facility_id"], name: "index_facility_onboardings_on_facility_id"
+    t.index ["staff_id"], name: "index_facility_onboardings_on_staff_id"
   end
 
   create_table "staffs", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -41,5 +51,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_18_090218) do
     t.index ["facility_id"], name: "index_staffs_on_facility_id"
   end
 
+  add_foreign_key "facility_onboardings", "facilities"
+  add_foreign_key "facility_onboardings", "staffs"
   add_foreign_key "staffs", "facilities"
 end

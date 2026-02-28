@@ -13,7 +13,13 @@ module Staffs
       raise AlreadyConfirmedError, 'すでに確認済みのメールアドレスです' if staff.email_verified_at.present?
 
       staff.confirm!
+      update_onboarding_step!(staff)
       staff
+    end
+
+    def self.update_onboarding_step!(staff)
+      onboarding = FacilityOnboarding.find_or_create_by!(staff: staff)
+      onboarding.ensure_at_least!(:facility_info)
     end
   end
 end

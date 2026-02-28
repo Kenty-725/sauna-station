@@ -10,7 +10,7 @@ import { InputField } from "../components/InputField";
 type CreateAccountStepProps = {
   formData: Record<string, any>;
   onFormDataChange: (data: Record<string, any>) => void;
-  onNext: () => void;
+  onNext: () => Promise<void>;
 };
 
 export default function CreateAccountStep({

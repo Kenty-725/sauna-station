@@ -9,6 +9,7 @@ export async function createStaff(data: {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({ staff: data }),
   });
 

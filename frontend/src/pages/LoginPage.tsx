@@ -23,8 +23,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password);
-      // ステップ3（0始まりで index=2: 施設基本情報）から開始
-      navigate("/onboarding?step=2");
+      navigate("/onboarding");
     } catch (e: any) {
       setError(typeof e === 'string' ? e : e?.error || 'ログインに失敗しました');
     } finally {

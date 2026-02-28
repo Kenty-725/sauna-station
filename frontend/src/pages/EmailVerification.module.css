@@ -1,0 +1,111 @@
+.root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 20%, #0f172a, #0b1224);
+  color: #e5e7eb;
+  padding: 24px;
+}
+
+.card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 16px;
+  padding: 32px;
+  width: min(640px, 100%);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.lead {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #cbd5e1;
+}
+
+.note {
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #1f2937;
+  background: #0b1224;
+  color: #e5e7eb;
+}
+
+.input:focus {
+  outline: 1px solid #2563eb;
+}
+
+.message {
+  background: #0f172a;
+  border: 1px solid #1d4ed8;
+  color: #dbeafe;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.error {
+  border-color: #dc2626;
+  color: #fecdd3;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.button {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  color: white;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.footerNote {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}

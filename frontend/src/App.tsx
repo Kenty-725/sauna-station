@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import OnboardingPage from "./pages/Onboarding";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
+import EmailVerificationPage from "./pages/EmailVerification";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/staff/login" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/email/verify" element={<EmailVerificationPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
       </Routes>
     </Router>
