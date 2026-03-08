@@ -1,9 +1,15 @@
-function App() {
-  return (
-    <div style={{ padding: '2rem', textAlign: 'center', width: '100%' }}>
-      <h1 style={{ fontSize: '3rem', fontWeight: 'bold', margin: 0 }}>Hello World</h1>
-    </div>
-  );
-}
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { MainLayout } from './layouts/MainLayout';
+import { Home } from './pages/Home';
 
-export default App;
+export const App = () => {
+  return (
+    <BrowserRouter>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </MainLayout>
+    </BrowserRouter>
+  );
+};
