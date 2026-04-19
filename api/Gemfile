@@ -44,6 +44,8 @@ end
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'letter_opener', '~> 1.10'
+  gem 'letter_opener_web', '~> 2.0'
 end
 
 gem 'rubocop', '~> 1.81', groups: %i[development test]
@@ -51,3 +53,10 @@ gem 'rubocop-performance', '~> 1.26', groups: %i[development test]
 gem 'rubocop-rails', '~> 2.33', groups: %i[development test]
 
 gem 'rubocop-rspec', '~> 3.7', groups: %i[development test]
+gem 'rack-cors'
+
+gem "devise", "~> 5.0"
+gem "devise-i18n", "~> 1.12"
+gem "rails-i18n", "~> 7.0"
+
+gem "rspec-rails", "~> 8.0", :group => :"development test"

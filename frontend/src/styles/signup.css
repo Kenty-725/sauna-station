@@ -1,0 +1,102 @@
+:root {
+  --accent-start: #f99434;
+  --accent-end: #f36c3f;
+  --bg-right: #eef0ff;
+}
+
+.signup-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1c202a 0%, #111827 100%);
+}
+
+.signup-hero {
+  background: url('/images/sauna-signup.png') center/cover no-repeat;
+  position: relative;
+  min-height: 100vh;
+}
+
+.signup-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(0, 0, 0, 0.55) 10%, rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0) 100%);
+}
+
+.signup-hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 2.4rem;
+  color: #f7f8fc;
+  align-self: flex-end;
+  max-width: 520px;
+}
+
+.signup-right {
+  background: var(--bg-right);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(27, 37, 89, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  max-width: 520px;
+}
+
+.step-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.step-line {
+  height: 2px;
+  background: #d6ddf5;
+}
+
+.form-control.signup {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #d5dcf2;
+  border-radius: 14px;
+  height: 52px;
+  color: #1f2b44;
+}
+
+.form-control.signup:focus {
+  border-color: #b9c6ff;
+  box-shadow: 0 0 0 0.2rem rgba(185, 198, 255, 0.35);
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, var(--accent-start) 0%, var(--accent-end) 100%);
+  color: #1b1207;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(249, 148, 52, 0.35);
+}
+
+.btn-gradient:hover {
+  opacity: 0.92;
+}
+
+.note-box {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(200, 210, 240, 0.8);
+  border-radius: 16px;
+}
+
+@media (max-width: 991px) {
+  .signup-hero {
+    min-height: 260px;
+  }
+  .signup-hero-content {
+    padding: 2.2rem;
+  }
+}

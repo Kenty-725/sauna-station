@@ -1,0 +1,29 @@
+ja:
+  activerecord:
+    models:
+      staff: スタッフ
+      facility: 施設
+    attributes:
+      staff:
+        name: 氏名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+      facility:
+        name: 施設名
+        address_prefecture: 都道府県
+        address_line: 住所
+        base_capacity: 基本収容人数
+        base_price: 基本料金
+        status: ステータス
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      taken: は既に使用されています
+      blank: を入力してください
+      confirmation: が一致しません
+      too_short: は%{count}文字以上で入力してください
+      too_long: は%{count}文字以内で入力してください
+      invalid: は不正な値です
+      not_a_number: は数値で入力してください
+      greater_than_or_equal_to: は%{count}以上の値にしてください

@@ -22,6 +22,10 @@ Rails.application.configure do
     'Cache-Control' => "public, max-age=#{1.hour.to_i}"
   }
 
+  config.action_mailer.delivery_method = :test
+
+  config.action_controller.allow_forgery_protection = false
+
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
@@ -45,6 +49,9 @@ Rails.application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Devise mailer host for tests
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
