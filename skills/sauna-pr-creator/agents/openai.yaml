@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sauna PR Creator"
+  short_description: "sauna-stationのPRを日本語テンプレートで作成する"
+  default_prompt: "Use $sauna-pr-creator to create a Japanese pull request for sauna-station using .github/pull_request_template.md."
