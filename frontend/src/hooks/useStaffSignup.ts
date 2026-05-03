@@ -42,8 +42,8 @@ export const useStaffSignup = () => {
         password_confirmation: passwordConfirmation,
       });
       navigate('/staff/signup/sent');
-    } catch (err: any) {
-      setError(err.message ?? 'サインアップに失敗しました');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'サインアップに失敗しました');
     } finally {
       setLoading(false);
     }

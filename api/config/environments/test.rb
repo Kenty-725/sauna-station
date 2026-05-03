@@ -52,6 +52,7 @@ Rails.application.configure do
 
   # Devise mailer host for tests
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.hosts.clear
 
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise

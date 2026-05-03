@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useStaffSignup } from '../../hooks/useStaffSignup';
 import { ErrorAlert } from '../shared/ErrorAlert';
 
@@ -13,7 +14,7 @@ const InputField = ({ label, type = 'text', value, placeholder, onChange }: Inpu
   <div>
     <label className="form-label">{label}</label>
     <input
-      className="form-control"
+      className="form-control signup"
       type={type}
       value={value}
       onChange={(e) => onChange(e.target.value)}
@@ -63,9 +64,9 @@ export const StaffSignupForm = () => {
 
       <div className="text-center text-secondary pt-3">
         すでにアカウントをお持ちですか？{' '}
-        <a className="signup-footer-link fw-semibold" href="/staff/login">
+        <Link className="signup-footer-link fw-semibold" to="/staff/login">
           ログインはこちら
-        </a>
+        </Link>
       </div>
     </div>
   );

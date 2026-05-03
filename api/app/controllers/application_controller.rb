@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
   include ActionController::RequestForgeryProtection
+  include Devise::Controllers::Helpers
 
   protect_from_forgery with: :null_session
 
@@ -29,6 +30,17 @@ class ApplicationController < ActionController::API
     return nil unless payload.is_a?(Hash)
 
     Staff.find_by(id: payload['staff_id'] || payload[:staff_id], confirmed_at: nil)
+  end
+
+  def serialize_current_staff(staff)
+    {
+      id: staff.id,
+      name: staff.name,
+      email: staff.email,
+      role: staff.role,
+      facility_id: staff.facility_id,
+      needs_facility_setup: staff.admin? && staff.facility_id.blank?
+    }
   end
 
   def preflight
