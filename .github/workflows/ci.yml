@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+
+jobs:
+  backend-rspec:
+    name: Backend RSpec
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: sauna_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -ppassword"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      RAILS_ENV: test
+      DATABASE_HOST: 127.0.0.1
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: password
+      SECRET_KEY_BASE: test_secret_key_base
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3.9
+          bundler-cache: false
+
+      - name: Install MySQL client libraries
+        run: sudo apt-get update && sudo apt-get install -y libmariadb-dev
+
+      - name: Install gems
+        working-directory: api
+        run: |
+          bundle config set path vendor/bundle
+          bundle install --jobs 4 --retry 3
+
+      - name: Prepare test database
+        working-directory: api
+        run: bundle exec rails db:prepare
+
+      - name: Run RSpec
+        working-directory: api
+        run: bundle exec rspec
+
+  frontend-checks:
+    name: Frontend Lint and Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run ESLint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build

@@ -14,8 +14,8 @@ export const useStaffSignupSent = () => {
         const response = await fetchPendingStaffConfirmation();
         setEmail(response.email);
         setStatus('idle');
-      } catch (err: any) {
-        setError(err.message ?? '確認待ち情報の取得に失敗しました');
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : '確認待ち情報の取得に失敗しました');
         setStatus('missing');
       }
     };
@@ -32,8 +32,8 @@ export const useStaffSignupSent = () => {
       const response = await resendStaffConfirmation();
       setEmail(response.email);
       setStatus('success');
-    } catch (err: any) {
-      setError(err.message ?? '再送に失敗しました');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : '再送に失敗しました');
       setStatus('error');
     }
   };
